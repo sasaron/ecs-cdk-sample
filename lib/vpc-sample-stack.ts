@@ -3,9 +3,10 @@ import { Construct } from 'constructs';
 
 export class VPCSampleStack extends Stack {
   public readonly vpc : ec2.IVpc;
-  constructor(scope: Construct, id: string, props?: StackProps) {
+  constructor(scope: Construct, id: string, env: string ,props?: StackProps) {
     super(scope, id, props);
-    this.vpc = new ec2.Vpc(this, 'ECSSampleVPC', {
+
+    this.vpc = new ec2.Vpc(this, `${env}ECSSampleVPC`, {
       cidr: "192.168.0.0/21",
       maxAzs: 2,
       subnetConfiguration: [
@@ -31,6 +32,6 @@ export class VPCSampleStack extends Stack {
         }
       ]
     });
-    Tags.of(this.vpc).add('Name', 'VPCSampleStack');
+    Tags.of(this.vpc).add('Name', `${env}VPCSampleStack`);
  }
 }
