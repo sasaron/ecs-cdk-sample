@@ -2,10 +2,10 @@ import { Stack, StackProps, aws_ec2 as ec2, Tags } from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 
 export class VPCSampleStack extends Stack {
+  public readonly vpc : ec2.IVpc;
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
-
-    const vpc = new ec2.Vpc(this, 'ECSSampleVPC', {
+    this.vpc = new ec2.Vpc(this, 'ECSSampleVPC', {
       cidr: "192.168.0.0/21",
       maxAzs: 2,
       subnetConfiguration: [
@@ -16,12 +16,12 @@ export class VPCSampleStack extends Stack {
         },
         {
           cidrMask: 24,
-          name: 'protected',
+          name: 'private',
           subnetType: ec2.SubnetType.PRIVATE_WITH_NAT
         },
         {
           cidrMask: 24,
-          name: 'private',
+          name: 'protected',
           subnetType: ec2.SubnetType.PRIVATE_ISOLATED
         }
       ],
@@ -31,6 +31,6 @@ export class VPCSampleStack extends Stack {
         }
       ]
     });
-    Tags.of(vpc).add('Name', 'VPCSampleStack');
-  }
+    Tags.of(this.vpc).add('Name', 'VPCSampleStack');
+ }
 }

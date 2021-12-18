@@ -5,5 +5,5 @@ import { EcsSampleStack } from '../lib/ecs-sample-stack';
 import { VPCSampleStack } from '../lib/vpc-sample-stack'; 
 
 const app = new cdk.App();
-new EcsSampleStack(app, 'EcsSampleStack', {});
-new VPCSampleStack(app, 'VPCSampleStack', {});
+const vpcStack = new VPCSampleStack(app, 'VPCSampleStack', {});
+new EcsSampleStack(app, 'EcsSampleStack', vpcStack.vpc, {});
