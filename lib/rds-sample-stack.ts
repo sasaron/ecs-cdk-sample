@@ -15,10 +15,12 @@ export class RDSSampleStack extends Stack {
     const user = ssm.StringParameter.valueForStringParameter(this, '/ECSSample/Dev/RDS/User');
     const rotation = ssm.StringParameter.valueForStringParameter(this, '/ECSSample/Dev/RDS/Rotation'); // あまり良くないかも
     const password = SecretValue.ssmSecure('/ECSSample/Dev/RDS/Password', rotation);
+    const database = ssm.StringParameter.valueForStringParameter(this, '/ECSSample/Dev/RDS/Database');
+
     this.rdsCluster = new rds.DatabaseCluster(this, 'SampleAuroraCluster', {
       engine: rds.DatabaseClusterEngine.auroraMysql({ version: rds.AuroraMysqlEngineVersion.VER_3_01_0 }),
       credentials: rds.Credentials.fromPassword(user, password),
-
+      defaultDatabaseName: database,
       instanceProps: {
         instanceType: ec2.InstanceType.of(ec2.InstanceClass.T4G, ec2.InstanceSize.MEDIUM),
         vpcSubnets: {
