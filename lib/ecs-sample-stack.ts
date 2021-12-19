@@ -1,7 +1,6 @@
 import {
   Stack,
   StackProps,
-  Fn,
   aws_ecs as ecs,
   aws_ec2 as ec2,
   aws_ecs_patterns as ecsp
@@ -10,9 +9,11 @@ import { IVpc } from 'aws-cdk-lib/aws-ec2';
 import { Construct } from 'constructs';
 
 export class EcsSampleStack extends Stack {
+  public readonly ecsToRDSSecurityGroup: ec2.ISecurityGroup;
   constructor(scope: Construct, id: string, vpc: IVpc, props?: StackProps) {
     super(scope, id, props);
     const cluster = new ecs.Cluster(this, 'SampleEcsCluster', { vpc })
+    this.ecsToRDSSecurityGroup = new ec2.SecurityGroup(this,'ECStoRDSSecurityGroup', {vpc});
 
     new ecsp.ApplicationLoadBalancedFargateService(this, 'SampleWebService', {
       cluster,
@@ -20,6 +21,7 @@ export class EcsSampleStack extends Stack {
         image: ecs.ContainerImage.fromRegistry('amazon/amazon-ecs-sample'),
       },
       publicLoadBalancer: true,
+      securityGroups: [ this.ecsToRDSSecurityGroup ] ,
       deploymentController: {
         type: ecs.DeploymentControllerType.CODE_DEPLOY
       },
