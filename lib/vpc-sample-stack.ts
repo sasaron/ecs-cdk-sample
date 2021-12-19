@@ -31,6 +31,23 @@ export class VPCSampleStack extends Stack {
         }
       ]
     });
+    this.vpc.addGatewayEndpoint("s3-endpoint", {
+      service: ec2.GatewayVpcEndpointAwsService.S3,
+      subnets: [
+        {
+          subnets: this.vpc.privateSubnets
+        }
+      ]
+    })
+    this.vpc.addInterfaceEndpoint("ecr-endpoint", {
+      service: ec2.InterfaceVpcEndpointAwsService.ECR
+    })
+    this.vpc.addInterfaceEndpoint("ecr-docker-endpoint", {
+      service: ec2.InterfaceVpcEndpointAwsService.ECR_DOCKER
+    })
+    this.vpc.addInterfaceEndpoint("ssm-endpoint", {
+      service: ec2.InterfaceVpcEndpointAwsService.SSM
+    })
     Tags.of(this.vpc).add('Name', 'VPCSampleStack');
  }
 }
