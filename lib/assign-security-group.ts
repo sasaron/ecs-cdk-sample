@@ -8,8 +8,8 @@ export class AssignSecurityGroup {
     this.rdsSecurityGroup = rdsSecurityGroup;
 	}
   assign(){
-    this.rdsSecurityGroup.addIngressRule(
-      this.ecsSecurityGroup,
+    this.ecsSecurityGroup.connections.allowTo(
+      this.rdsSecurityGroup,
       ec2.Port.tcp(3306),
       'Allow ECS Connection'
     );
