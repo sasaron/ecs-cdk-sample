@@ -1,12 +1,11 @@
 package main
 
 import (
+	"database/sql"
 	"fmt"
 	"log"
 	"net/http"
 	"os"
-
-	"database/sql"
 
 	_ "github.com/go-sql-driver/mysql"
 )
@@ -18,7 +17,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 func main() {
 	DBMS := "mysql"
 	USER := os.Getenv("USER")
-	PASS := os.Getenv("PASS")
+	PASS := "password"
 	HOST := os.Getenv("ENDPOINT")
 	PORT := "3306"
 	DBNAME := os.Getenv("DATABASE")

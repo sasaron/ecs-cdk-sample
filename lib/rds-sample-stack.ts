@@ -21,7 +21,7 @@ export class RDSSampleStack extends Stack {
 
     this.rdsSecurityGroup = new ec2.SecurityGroup(this,'RDSSecurityGroup', {
       vpc,
-      allowAllOutbound: false,
+      allowAllOutbound: true,
     });
     this.rdsCluster = new rds.DatabaseCluster(this, 'SampleAuroraCluster', {
       engine: rds.DatabaseClusterEngine.auroraMysql({ version: rds.AuroraMysqlEngineVersion.VER_3_01_0 }),
