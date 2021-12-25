@@ -8,7 +8,7 @@ import {
 } from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 
-export class RDSSampleStack extends Stack {
+export class RDSStack extends Stack {
   public readonly rdsCluster: rds.IDatabaseCluster;
   public readonly rdsSecurityGroup: ec2.ISecurityGroup;
   constructor(scope: Construct, id: string, vpc: ec2.IVpc, props?: StackProps) {

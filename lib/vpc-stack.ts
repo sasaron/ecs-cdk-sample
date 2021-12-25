@@ -1,7 +1,7 @@
 import { Stack, StackProps, aws_ec2 as ec2, Tags } from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 
-export class VPCSampleStack extends Stack {
+export class VPCStack extends Stack {
   public readonly vpc : ec2.IVpc;
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
