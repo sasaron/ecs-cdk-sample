@@ -19,7 +19,7 @@ export = {
     },
     "protected": {
       "cidrMask": 24
-    }
+    },
   },
   "rds": {
     "version": rds.AuroraMysqlEngineVersion.VER_3_01_0,
